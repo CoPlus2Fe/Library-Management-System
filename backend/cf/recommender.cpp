@@ -1,14 +1,12 @@
 #include "recommender.h"
-#include <unordered_map>
-#include <unordered_set>
-#include <algorithm>
+#include <unordered_map>    //引入哈希表容器
+#include <unordered_set>    //引入哈希集合
+#include <algorithm>        //引入排序函数
 
-// ------------------------
-// 工具函数：Jaccard 相似度
-// ------------------------
+/// @brief Jaccard相似度函数：A与B交集的大小与A与B并集的大小的比值，由于杰卡德相似系数一般无法反映具体用户的评分喜好信息， 所以常用来评估用户是否会对某物品进行打分，而不是预估用户会对某物品打多少分
 static double jaccard(const std::unordered_set<string>& a,
                       const std::unordered_set<string>& b) {
-    if (a.empty() || b.empty()) return 0.0;
+    if (a.empty() || b.empty()) return 0.0;     //如果任意集合为空，相似度返回 0，避免除以零
 
     int intersection = 0;
     for (const auto& x : a) {

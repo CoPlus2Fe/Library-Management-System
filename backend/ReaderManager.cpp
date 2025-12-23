@@ -1,4 +1,4 @@
-#include "ReaderManager.h"
+#include "readerManager.h"
 #include "utils.h"
 #include "config.h"
 #include <fstream>

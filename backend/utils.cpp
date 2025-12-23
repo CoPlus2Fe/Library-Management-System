@@ -2,8 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <ctime>
-#include <io.h>
-#include <direct.h>
+#include <io.h>         //在其他系统上需要改为#include <unistd.h>
+#include <direct.h>     //在其他系统上需要改为#include <sys/stat.h>
 #include <cstdio>
 
 using namespace std;

@@ -1,5 +1,5 @@
-#ifndef DATA_STRUCTS_H
-#define DATA_STRUCTS_H
+#ifndef DATASTRUCTS_H
+#define DATASTRUCTS_H
 
 #include <string>
 

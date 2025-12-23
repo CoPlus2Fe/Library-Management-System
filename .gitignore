@@ -1,0 +1,15 @@
+# IDE
+.idea/
+.vscode/
+
+# Visual Studio user files
+*.vcxproj.user
+
+# Build output
+Debug/
+Release/
+x64/
+
+# OS
+Thumbs.db
+.DS_Store
