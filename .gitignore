@@ -1,6 +1,8 @@
 # IDE
 .idea/
 .vscode/
+*.vcxproj
+*.vcxproj.filters
 
 # Visual Studio user files
 *.vcxproj.user
@@ -11,10 +13,6 @@ Release/
 x64/
 
 # OS
-<<<<<<< HEAD
 Thumbs.db
 .DS_Store
 **/.DS_Store
-=======
-Thumbs.db
->>>>>>> 1df70c5c1910a540ba3697163042d942d01ebef9
