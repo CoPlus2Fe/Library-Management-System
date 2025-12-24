@@ -1,4 +1,4 @@
-#ifndef DATASTRUCTS_H
+#ifndef DATASTRUCTS_H   //作用是防止头文件被多重包含
 #define DATASTRUCTS_H
 
 #include <string>

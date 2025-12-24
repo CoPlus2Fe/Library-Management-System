@@ -9,8 +9,8 @@
 using std::string;  
 using std::vector;
 
-//类型别名BorrowRecord，表示借阅记录，记录user_id和book_id，BorrowRecord.first=user_id，BorrowRecord.second=book_id
-using BorrowRecord = std::pair<string, string>;
+//类型别名borrowRecord，表示借阅记录，记录user_id和book_id，borrowRecord.first=user_id，borrowRecord.second=book_id
+using borrowRecord = std::pair<string, string>;
 
 /// @brief 定义一个类，在.cpp文件中实现推荐算法的功能
 class Recommender {
@@ -23,7 +23,7 @@ public:     //全局可见的函数
      * @return 推荐的 book_id 列表
      */
     vector<string> recommend(const string& userId,
-                             const vector<BorrowRecord>& records,
+                             const vector<borrowRecord>& records,
                              int topN = 10);
 };
 /* 

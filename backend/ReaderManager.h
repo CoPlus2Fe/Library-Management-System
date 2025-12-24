@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <string>
-#include "data_structs.h"
+#include "dataStructs.h"
 
-class ReaderManager {
+class readerManager {
 private:
     // 内部加载读者
     std::vector<Reader> loadAllReadersInternal();
