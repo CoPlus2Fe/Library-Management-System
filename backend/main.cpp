@@ -42,7 +42,7 @@ void showBookMenu(BookManager& bookMgr) {
 }
 
 // 读者管理子菜单
-void showReaderMenu(ReaderManager& readerMgr) {
+void showReaderMenu(readerManager& readerMgr) {
     int choice;
     while (true) {
         cout << "\n===== 读者管理子菜单 =====" << endl;
@@ -90,7 +90,7 @@ int main() {
 
     // 初始化管理器
     BookManager bookMgr;
-    ReaderManager readerMgr;
+    readerManager readerMgr;
     BorrowManager borrowMgr(bookMgr, readerMgr); // 依赖注入
 
     int mainChoice;
