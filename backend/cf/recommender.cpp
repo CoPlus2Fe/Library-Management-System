@@ -8,7 +8,7 @@ static double jaccard(const std::unordered_set<string>& a,
                       const std::unordered_set<string>& b) {
     if (a.empty() || b.empty()) return 0.0;     //如果任意集合为空，相似度返回 0，避免除以零
 
-    int intersection = 0;
+    int intersection = 0;       //交集大小
     for (const auto& x : a) {
         if (b.count(x)) intersection++;
     }
@@ -21,7 +21,7 @@ static double jaccard(const std::unordered_set<string>& a,
 // 核心推荐实现
 // ------------------------
 vector<string> Recommender::recommend(const string& userId,
-                                      const vector<BorrowRecord>& records,
+                                      const vector<borrowRecord>& records,
                                       int topN) {
     // 1. 构建 user -> books 映射
     std::unordered_map<string, std::unordered_set<string>> userBooks;

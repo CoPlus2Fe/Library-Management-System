@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "data_structs.h"
+#include "dataStructs.h"
 #include "config.h"
 
 class BookManager {
