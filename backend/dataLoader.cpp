@@ -2,8 +2,8 @@
 #include <fstream>
 #include <sstream>
 
-vector<BorrowRecord> loadBorrowRecords(const string& filename) {
-    vector<BorrowRecord> records;
+vector<borrowRecord> loadBorrowRecords(const string& filename) {
+    vector<borrowRecord> records;
     std::ifstream file(filename);
     string line;
 

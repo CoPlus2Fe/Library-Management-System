@@ -7,4 +7,4 @@ using std::vector;
 using std::string;
 
 // 从 CSV 读取借阅记录
-vector<BorrowRecord> loadBorrowRecords(const string& filename);
+vector<borrowRecord> loadBorrowRecords(const string& filename);
