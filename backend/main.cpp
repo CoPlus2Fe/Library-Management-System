@@ -1,11 +1,11 @@
 #include <iostream>
-#include "BookManager.h"
-#include "ReaderManager.h"
-#include "BorrowManager.h"
+#include "bookManager.h"
+#include "readerManager.h"
+#include "borrowManager.h"
 #include "utils.h"
 #include "config.h"
 #include "rank.h"
-
+#include "dataLoader.h"
 using namespace std;
 
 // 主菜单
@@ -90,12 +90,14 @@ int main() {
     checkAndCreateFile(BOOKS_PATH);
     checkAndCreateFile(READERS_PATH);
     checkAndCreateFile(RECORDS_PATH);
+    checkAndCreateFile(INTER_REEVALUATION_PATH);
 
     // 初始化管理器
     BookManager bookMgr;
     readerManager readerMgr;
     BorrowManager borrowMgr(bookMgr, readerMgr); // 依赖注入
-
+    loadBorrowRecords(INTER_REEVALUATION_PATH);
+    
     int mainChoice;
     while (true) {
         showMainMenu();
