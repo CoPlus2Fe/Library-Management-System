@@ -2,11 +2,10 @@
 #include <unordered_map>
 #include <algorithm>
 
-// -----------------------------
 // 加权 Jaccard 相似度
 // a / b: book_id -> weight
-// -----------------------------
-static double weightedJaccard(
+
+static double jaccard(
     const std::unordered_map<string, int>& a,
     const std::unordered_map<string, int>& b
 ) {
@@ -69,7 +68,7 @@ vector<string> Recommender::recommend(
         const string& otherUser = pair.first;
                 if (otherUser == user_id) continue;
 
-        double sim = weightedJaccard(
+        double sim = jaccard(
             targetBooks,
             pair.second
         );

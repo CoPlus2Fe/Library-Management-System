@@ -46,3 +46,28 @@ vector<borrowRecord> loadBorrowRecords(const string& filename) {
 
     return records;
 }
+
+std::vector<User> loadUsers(const std::string& filename) {
+    std::vector<User> users;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open()) return users;
+
+    std::getline(file, line); // 跳过表头
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string field;
+        User u;
+
+        std::getline(ss, field, ',');
+        u.user_id = std::stoi(field);
+
+        std::getline(ss, u.username, ',');
+        std::getline(ss, u.password, ',');
+
+        users.push_back(u);
+    }
+    return users;
+}

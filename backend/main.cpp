@@ -6,6 +6,9 @@
 #include "config.h"
 #include "rank.h"
 #include "dataLoader.h"
+#include "authManager.h"
+#include "./cf/recommender.h"
+
 using namespace std;
 
 // 主菜单
@@ -84,6 +87,64 @@ void showBorrowMenu(BorrowManager& borrowMgr) {
     }
 }
 
+void login(AuthManager& authMgr) {
+    // 如果已经登录，询问是否退出
+    if (authMgr.isLoggedIn()) {
+        cout << "当前已登录用户：" << authMgr.getCurrentUser().username << endl;
+        cout << "是否退出登录？(y/n): ";
+        char choice;
+        cin >> choice;
+
+        if (choice == 'y' || choice == 'Y') {
+            authMgr.logout();
+            cout << "已退出登录。\n";
+        } else {
+            cout << "继续保持登录状态。\n";
+        }
+        return;
+    }
+
+    //未登录，执行登录流程
+    string username, password;
+    cout << "===== 用户登录 =====" << endl;
+    cout << "用户名: ";
+    cin >> username;
+    cout << "密码: ";
+    cin >> password;
+
+    if (!authMgr.login(username, password)) {
+        cout << "登录失败：用户名或密码错误。" << endl;
+        return;
+    }
+
+    cout << "登录成功，欢迎你：" << username << "！" << endl;
+}
+
+void runRecommendation(AuthManager& auth) {
+    if (!auth.isLoggedIn()) {
+        cout << "请先登录！" << endl;
+        return;
+    }
+
+    string userId = auth.getCurrentUser().user_id;
+
+    // 1. 加载数据
+    vector<borrowRecord> records = loadBorrowRecords(INTER_REEVALUATION_PATH);
+
+    // 2. 创建推荐器
+    Recommender recommender;
+
+    // 3. 执行推荐
+    vector<string> result = recommender.recommend(userId, records, 5);
+
+    // 4. 输出结果
+    cout << "\n📚 推荐给你的书籍：" << endl;
+    for (auto& book : result) {
+        cout << " - " << book << endl;
+    }
+}
+
+
 int main() {
     // 初始化：检查文件夹/文件
     checkAndCreateFolder(DATA_FOLDER);
@@ -96,8 +157,11 @@ int main() {
     BookManager bookMgr;
     readerManager readerMgr;
     BorrowManager borrowMgr(bookMgr, readerMgr); // 依赖注入
-    loadBorrowRecords(INTER_REEVALUATION_PATH);
-    
+
+    auto users = loadUsers("data/userinfo.csv");
+    AuthManager auth(users);
+    login(auth);  // 登录
+
     int mainChoice;
     while (true) {
         showMainMenu();
