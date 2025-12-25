@@ -10,6 +10,8 @@ struct Book {
     std::string author;    // 作者
     std::string press;     // 出版社
     bool isBorrowed;       // 是否借出
+    std::string class1;//一级分类
+    std::string class2; 
 };
 
 // 读者结构体

@@ -25,7 +25,7 @@ vector<Book> BookManager::loadAllBooksInternal() {
 
     while (getline(file, line)) {
         vector<string> fields = splitCsvLine(line);
-        if (fields.size() != 5) {
+        if (fields.size() != 6) {
             cout << "警告：图书文件第 " << lineNum << " 行格式错误，跳过" << endl;
             lineNum++;
             continue;
@@ -36,7 +36,9 @@ vector<Book> BookManager::loadAllBooksInternal() {
         book.name = fields[1];
         book.author = fields[2];
         book.press = fields[3];
-        book.isBorrowed = (fields[4] == "1");
+        book.class1 = fields[4];
+        book.class2 = fields[5];
+   
         books.push_back(book);
         lineNum++;
     }
@@ -53,13 +55,14 @@ void BookManager::saveAllBooksInternal(const vector<Book>& books) {
         return;
     }
 
-    file << "图书ID,书名,作者,出版社,是否借出" << endl;
+    file << "图书ID,书名,作者,出版社,是否借出,一级分类，二级分类" << endl;
     for (const auto& book : books) {
         file << wrapQuotes(book.bookId) << ","
             << wrapQuotes(book.name) << ","
             << wrapQuotes(book.author) << ","
             << wrapQuotes(book.press) << ","
-            << (book.isBorrowed ? "1" : "0") << endl;
+            << wrapQuotes(book.class1) << ","
+            << wrapQuotes(book.class2) <<  endl;
     }
 
     file.close();
@@ -89,6 +92,10 @@ void BookManager::addBook() {
     getline(cin, newBook.author);
     cout << "请输入出版社：";
     getline(cin, newBook.press);
+    cout << "请输入一级分类：";
+    getline(cin, newBook.class1);
+    cout << "请输入二级分类：";
+    getline(cin, newBook.class2);
     newBook.isBorrowed = false;
 
     books.push_back(newBook);
@@ -116,7 +123,8 @@ void BookManager::queryBook() {
         << setw(30) << "书名"
         << setw(20) << "作者"
         << setw(25) << "出版社"
-        << setw(10) << "是否借出" << endl;
+        << setw(25) << "一级分类"
+        << setw(25) << "二级分类"<< endl;
     cout << "------------------------------------------------------------------------" << endl;
 
     for (const auto& book : books) {
@@ -127,7 +135,8 @@ void BookManager::queryBook() {
                 << setw(30) << book.name
                 << setw(20) << book.author
                 << setw(25) << book.press
-                << setw(10) << (book.isBorrowed ? "已借出" : "未借出") << endl;
+                << setw(25) << book.class1
+                << setw(25) << book.class2<< endl;
             found = true;
         }
     }
@@ -148,7 +157,8 @@ void BookManager::showAllBooks() {
         << setw(30) << "书名"
         << setw(20) << "作者"
         << setw(25) << "出版社"
-        << setw(10) << "是否借出" << endl;
+        << setw(25) << "一级分类"
+        << setw(25) << "二级分类" << endl;
     cout << "------------------------------------------------------------------------" << endl;
 
     for (const auto& book : books) {
@@ -156,7 +166,8 @@ void BookManager::showAllBooks() {
             << setw(30) << book.name
             << setw(20) << book.author
             << setw(25) << book.press
-            << setw(10) << (book.isBorrowed ? "已借出" : "未借出") << endl;
+            << setw(25) << book.class1
+            << setw(10) << book.class2 << endl;
     }
     cout << "总计：" << books.size() << " 本" << endl;
 }
