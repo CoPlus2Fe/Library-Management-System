@@ -17,6 +17,7 @@ public:
     void addReader();
     // 检查读者是否存在（解决VCR001错误）
     bool isReaderExist(const std::string& readerId);
+    void delReader();
     // 对外暴露加载读者
     std::vector<Reader> getAllReaders();
 };

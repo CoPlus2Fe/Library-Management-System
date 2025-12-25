@@ -99,6 +99,39 @@ void readerManager::addReader() {
     saveAllReadersInternal(readers);
     cout << "读者新增成功！" << endl;
 }
+void readerManager::delReader()
+{
+    // 1. 加载所有读者数据（从文件/数据库）
+    vector<Reader> readers = loadAllReadersInternal();
+    Reader badReader;
+
+    // 2. 提示用户输入要拉黑的读者ID
+    cout << "\n==== 拉黑读者 =====" << endl;
+    cout << "请输入读者ID（唯一）：";
+    cin >> badReader.readerId;
+
+    // 3. 遍历读者列表，找到目标ID并删除
+    auto it = readers.begin();
+    while (it != readers.end()) {
+        if (it->readerId == badReader.readerId) {
+            // 找到目标，从向量中删除该读者
+            it = readers.erase(it);
+            cout << "已找到该读者ID，已成功拉黑" << endl;
+
+            // 4. 将更新后的读者列表写回存储（文件/数据库）
+            saveAllReadersInternal(readers); // 需实现该保存函数
+            return;
+        }
+        else {
+            ++it;
+        }
+    }
+
+    // 5. 处理“未找到该读者ID”的情况
+    cout << "未找到ID为" << badReader.readerId << "的读者，请检查输入是否正确" << endl;
+}
+
+
 
 bool readerManager::isReaderExist(const string& readerId) {
     vector<Reader> readers = loadAllReadersInternal();

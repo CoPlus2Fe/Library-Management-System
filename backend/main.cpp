@@ -51,12 +51,14 @@ void showReaderMenu(readerManager& readerMgr) {
     while (true) {
         cout << "\n===== 读者管理子菜单 =====" << endl;
         cout << "1. 新增读者" << endl;
+        cout << "2. 拉黑读者" << endl;
         cout << "0. 返回主菜单" << endl;
         cout << "请选择：";
         cin >> choice;
 
         switch (choice) {
         case 1: readerMgr.addReader(); break;
+        case 2: readerMgr.delReader(); break;
         case 0: return;
         default: cout << "无效选择！" << endl;
         }
