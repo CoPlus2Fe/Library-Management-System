@@ -11,9 +11,9 @@ private:
     readerManager& readerMgr;   // 依赖注入：读者管理
 
     // 内部加载借阅记录
-    std::vector<BorrowRecord> loadAllRecordsInternal();
+    std::vector<borrowRecord> loadAllRecordsInternal();
     // 内部保存借阅记录
-    void saveAllRecordsInternal(const std::vector<BorrowRecord>& records);
+    void saveAllRecordsInternal(const std::vector<borrowRecord>& records);
     // 生成唯一借阅ID
     std::string generateRecordId();
 

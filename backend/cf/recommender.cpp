@@ -3,29 +3,30 @@
 #include <unordered_set>    //引入哈希集合
 #include <algorithm>        //引入排序函数
 
+using std::string;  
+using std::vector;
+
 /// @brief Jaccard相似度函数：A与B交集的大小与A与B并集的大小的比值，由于杰卡德相似系数一般无法反映具体用户的评分喜好信息， 所以常用来评估用户是否会对某物品进行打分，而不是预估用户会对某物品打多少分
 static double jaccard(const std::unordered_set<string>& a,
                       const std::unordered_set<string>& b) {
     if (a.empty() || b.empty()) return 0.0;     //如果任意集合为空，相似度返回 0，避免除以零
 
     int intersection = 0;       //交集大小
-    for (const auto& x : a) {
-        if (b.count(x)) intersection++;
+    for (const auto& x : a) {       //遍历集合 a
+        if (b.count(x)) intersection++;     //如果 b 中也包含该元素，交集大小加一
     }
 
-    int unionCount = a.size() + b.size() - intersection;
-    return unionCount == 0 ? 0.0 : (double)intersection / unionCount;
+    int unionCount = a.size() + b.size() - intersection;        //计算并集大小
+    return unionCount == 0 ? 0.0 : (double)intersection / unionCount;       //返回 Jaccard 相似度
 }
 
-// ------------------------
-// 核心推荐实现
-// ------------------------
+// 推荐算法实现
 vector<string> Recommender::recommend(const string& userId,
                                       const vector<borrowRecord>& records,
                                       int topN) {
-    // 1. 构建 user -> books 映射
+    //用哈希表构建 user -> books映射
     std::unordered_map<string, std::unordered_set<string>> userBooks;
-
+    //遍历所有借阅记录，r为records中的每一对，insert 把书放进该用户的集合（自动去重）
     for (const auto& r : records) {
         userBooks[r.first].insert(r.second);
     }
@@ -34,11 +35,11 @@ vector<string> Recommender::recommend(const string& userId,
     if (!userBooks.count(userId)) {
         return {};
     }
-
+    //targetBooks 引用目标用户的借书集合，const auto&自动推导类型，并且只读引用
     const auto& targetBooks = userBooks[userId];
 
     // 2. 计算与其他用户的相似度
-    std::vector<std::pair<string, double>> similarities;
+    vector<std::pair<string, double>> similarities;
 
     for (const auto& [otherUser, books] : userBooks) {
         if (otherUser == userId) continue;
