@@ -8,8 +8,8 @@
 
 using namespace std;
 
-vector<BorrowRecord> BorrowManager::loadAllRecordsInternal() {
-    vector<BorrowRecord> records;
+vector<borrowRecord> BorrowManager::loadAllRecordsInternal() {
+    vector<borrowRecord> records;
     checkAndCreateFile(RECORDS_PATH);
 
     ifstream file(RECORDS_PATH);
@@ -31,10 +31,10 @@ vector<BorrowRecord> BorrowManager::loadAllRecordsInternal() {
             continue;
         }
 
-        BorrowRecord record;
+        borrowRecord record;
         record.recordId = fields[0];
-        record.bookId = fields[1];
-        record.readerId = fields[2];
+        record.book_id = fields[1];
+        record.user_id = fields[2];
         record.borrowDate = fields[3];
         record.returnDate = fields[4];
         records.push_back(record);
@@ -46,7 +46,7 @@ vector<BorrowRecord> BorrowManager::loadAllRecordsInternal() {
     return records;
 }
 
-void BorrowManager::saveAllRecordsInternal(const vector<BorrowRecord>& records) {
+void BorrowManager::saveAllRecordsInternal(const vector<borrowRecord>& records) {
     ofstream file(RECORDS_PATH, ios::out | ios::trunc);
     if (!file.is_open()) {
         cout << "错误：无法写入借阅记录文件 " << RECORDS_PATH << endl;
@@ -56,8 +56,8 @@ void BorrowManager::saveAllRecordsInternal(const vector<BorrowRecord>& records) 
     file << "借阅ID,图书ID,读者ID,借阅日期,归还日期" << endl;
     for (const auto& record : records) {
         file << wrapQuotes(record.recordId) << ","
-             << wrapQuotes(record.bookId) << ","
-             << wrapQuotes(record.readerId) << ","
+             << wrapQuotes(record.book_id) << ","
+             << wrapQuotes(record.user_id) << ","
              << wrapQuotes(record.borrowDate) << ","
              << wrapQuotes(record.returnDate) << endl;
     }
@@ -100,11 +100,11 @@ void BorrowManager::borrowBook() {
     }
 
     // 创建借阅记录
-    vector<BorrowRecord> records = loadAllRecordsInternal();
-    BorrowRecord newRecord;
+    vector<borrowRecord> records = loadAllRecordsInternal();
+    borrowRecord newRecord;
     newRecord.recordId = generateRecordId();
-    newRecord.bookId = bookId;
-    newRecord.readerId = readerId;
+    newRecord.book_id = bookId;
+    newRecord.user_id = readerId;
     newRecord.borrowDate = getCurrentDate();
     newRecord.returnDate = "";
 
@@ -118,7 +118,7 @@ void BorrowManager::borrowBook() {
 
 void BorrowManager::returnBook() {
     vector<Book> books = bookMgr.getAllBooks();
-    vector<BorrowRecord> records = loadAllRecordsInternal();
+    vector<borrowRecord> records = loadAllRecordsInternal();
     string bookId;
 
     cout << "\n===== 图书归还 =====" << endl;
@@ -126,9 +126,9 @@ void BorrowManager::returnBook() {
     cin >> bookId;
 
     // 查找未归还记录
-    BorrowRecord* targetRecord = nullptr;
+    borrowRecord* targetRecord = nullptr;
     for (auto& record : records) {
-        if (record.bookId == bookId && record.returnDate.empty()) {
+        if (record.book_id == bookId && record.returnDate.empty()) {
             targetRecord = &record;
             break;
         }

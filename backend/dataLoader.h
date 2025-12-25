@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "./cf/recommender.h"   // 为了 BorrowRecord
+#include "dataStructs.h"
 
 using std::vector;
 using std::string;
