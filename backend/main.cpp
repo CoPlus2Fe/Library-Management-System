@@ -4,6 +4,7 @@
 #include "BorrowManager.h"
 #include "utils.h"
 #include "config.h"
+#include "rank.h"
 
 using namespace std;
 
@@ -67,6 +68,7 @@ void showBorrowMenu(BorrowManager& borrowMgr) {
         cout << "\n===== 借阅管理子菜单 =====" << endl;
         cout << "1. 图书借阅" << endl;
         cout << "2. 图书归还" << endl;
+        cout << "3. 图书借阅排行榜" << endl;
         cout << "0. 返回主菜单" << endl;
         cout << "请选择：";
         cin >> choice;
@@ -74,6 +76,7 @@ void showBorrowMenu(BorrowManager& borrowMgr) {
         switch (choice) {
         case 1: borrowMgr.borrowBook(); break;
         case 2: borrowMgr.returnBook(); break;
+        case 3: generateTop10BorrowRank(BOOKS_PATH, RECORDS_PATH); break;
         case 0: return;
         default: cout << "无效选择！" << endl;
         }

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-vector<Reader> ReaderManager::loadAllReadersInternal() {
+vector<Reader> readerManager::loadAllReadersInternal() {
     vector<Reader> readers;
     checkAndCreateFile(READERS_PATH);
 
@@ -51,7 +51,7 @@ vector<Reader> ReaderManager::loadAllReadersInternal() {
     return readers;
 }
 
-void ReaderManager::saveAllReadersInternal(const vector<Reader>& readers) {
+void readerManager::saveAllReadersInternal(const vector<Reader>& readers) {
     ofstream file(READERS_PATH, ios::out | ios::trunc);
     if (!file.is_open()) {
         cout << "错误：无法写入读者文件 " << READERS_PATH << endl;
@@ -70,7 +70,7 @@ void ReaderManager::saveAllReadersInternal(const vector<Reader>& readers) {
     cout << "成功保存 " << readers.size() << " 位读者数据" << endl;
 }
 
-void ReaderManager::addReader() {
+void readerManager::addReader() {
     vector<Reader> readers = loadAllReadersInternal();
     Reader newReader;
 
@@ -100,7 +100,7 @@ void ReaderManager::addReader() {
     cout << "读者新增成功！" << endl;
 }
 
-bool ReaderManager::isReaderExist(const string& readerId) {
+bool readerManager::isReaderExist(const string& readerId) {
     vector<Reader> readers = loadAllReadersInternal();
     for (const auto& reader : readers) {
         if (reader.readerId == readerId) {
@@ -110,6 +110,6 @@ bool ReaderManager::isReaderExist(const string& readerId) {
     return false;
 }
 
-vector<Reader> ReaderManager::getAllReaders() {
+vector<Reader> readerManager::getAllReaders() {
     return loadAllReadersInternal();
 }
