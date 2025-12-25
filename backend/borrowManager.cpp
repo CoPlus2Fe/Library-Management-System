@@ -88,7 +88,7 @@ void BorrowManager::borrowBook() {
         cout << "错误：图书ID不存在！" << endl;
         return;
     }
-    if (targetBook.isBorrowed) {
+    if (!targetBook.isBorrowed) {
         cout << "错误：该图书已借出！" << endl;
         return;
     }
